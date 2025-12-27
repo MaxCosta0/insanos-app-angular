@@ -1,0 +1,544 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-12-16T22:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "wrk_insanos_stock",
+      "_type": "workspace",
+      "name": "Insanos Stock API",
+      "description": "API de controle de estoque do Insanos Motoclube",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:8081/api",
+        "token": ""
+      },
+      "parentId": "wrk_insanos_stock"
+    },
+    {
+      "_id": "folder_auth",
+      "_type": "request_group",
+      "name": "🔐 Autenticação",
+      "parentId": "wrk_insanos_stock"
+    },
+    {
+      "_id": "req_login",
+      "_type": "request",
+      "name": "Login",
+      "method": "POST",
+      "url": "{{ _.base_url }}/auth/login",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@insanos.com\",\n  \"password\": \"admin123\"\n}"
+      },
+      "parentId": "folder_auth"
+    },
+    {
+      "_id": "req_me",
+      "_type": "request",
+      "name": "Get Current User",
+      "method": "GET",
+      "url": "{{ _.base_url }}/auth/me",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_auth"
+    },
+    {
+      "_id": "folder_categories",
+      "_type": "request_group",
+      "name": "🏷️ Categorias",
+      "parentId": "wrk_insanos_stock"
+    },
+    {
+      "_id": "req_list_categories",
+      "_type": "request",
+      "name": "List Categories",
+      "method": "GET",
+      "url": "{{ _.base_url }}/categories",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_categories"
+    },
+    {
+      "_id": "req_create_category",
+      "_type": "request",
+      "name": "Create Category",
+      "method": "POST",
+      "url": "{{ _.base_url }}/categories",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Nova Categoria\",\n  \"icon\": \"📦\"\n}"
+      },
+      "parentId": "folder_categories"
+    },
+    {
+      "_id": "req_delete_category",
+      "_type": "request",
+      "name": "Delete Category",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/categories/{id}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_categories"
+    },
+    {
+      "_id": "folder_products",
+      "_type": "request_group",
+      "name": "📦 Produtos",
+      "parentId": "wrk_insanos_stock"
+    },
+    {
+      "_id": "req_list_products",
+      "_type": "request",
+      "name": "List All Products",
+      "method": "GET",
+      "url": "{{ _.base_url }}/products",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_products"
+    },
+    {
+      "_id": "req_search_products",
+      "_type": "request",
+      "name": "Search Products",
+      "method": "GET",
+      "url": "{{ _.base_url }}/products?search=cerveja",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_products"
+    },
+    {
+      "_id": "req_products_by_category",
+      "_type": "request",
+      "name": "Products by Category",
+      "method": "GET",
+      "url": "{{ _.base_url }}/products?category=Bebidas",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_products"
+    },
+    {
+      "_id": "req_low_stock_products",
+      "_type": "request",
+      "name": "Low Stock Products",
+      "method": "GET",
+      "url": "{{ _.base_url }}/products?lowStock=true",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_products"
+    },
+    {
+      "_id": "req_get_product",
+      "_type": "request",
+      "name": "Get Product by ID",
+      "method": "GET",
+      "url": "{{ _.base_url }}/products/{id}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_products"
+    },
+    {
+      "_id": "req_create_product",
+      "_type": "request",
+      "name": "Create Product",
+      "method": "POST",
+      "url": "{{ _.base_url }}/products",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Cerveja Skol 350ml\",\n  \"barcode\": \"7891234567890\",\n  \"category\": \"Bebidas\",\n  \"costPrice\": 2.50,\n  \"salePrice\": 4.00,\n  \"minStock\": 24\n}"
+      },
+      "parentId": "folder_products"
+    },
+    {
+      "_id": "req_update_product",
+      "_type": "request",
+      "name": "Update Product",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/products/{id}",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Cerveja Skol 350ml\",\n  \"barcode\": \"7891234567890\",\n  \"category\": \"Bebidas\",\n  \"costPrice\": 2.80,\n  \"salePrice\": 4.50,\n  \"minStock\": 36\n}"
+      },
+      "parentId": "folder_products"
+    },
+    {
+      "_id": "req_delete_product",
+      "_type": "request",
+      "name": "Delete Product",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/products/{id}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_products"
+    },
+    {
+      "_id": "folder_sessions",
+      "_type": "request_group",
+      "name": "🎯 Sessões",
+      "parentId": "wrk_insanos_stock"
+    },
+    {
+      "_id": "req_list_sessions",
+      "_type": "request",
+      "name": "List All Sessions",
+      "method": "GET",
+      "url": "{{ _.base_url }}/sessions",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_sessions"
+    },
+    {
+      "_id": "req_active_session",
+      "_type": "request",
+      "name": "Get Active Session",
+      "method": "GET",
+      "url": "{{ _.base_url }}/sessions/active",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_sessions"
+    },
+    {
+      "_id": "req_get_session",
+      "_type": "request",
+      "name": "Get Session by ID",
+      "method": "GET",
+      "url": "{{ _.base_url }}/sessions/{id}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_sessions"
+    },
+    {
+      "_id": "req_open_session",
+      "_type": "request",
+      "name": "Open Session",
+      "method": "POST",
+      "url": "{{ _.base_url }}/sessions",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Sessão 16/12\",\n  \"initialCash\": 100.00,\n  \"observations\": \"Sessão de teste\"\n}"
+      },
+      "parentId": "folder_sessions"
+    },
+    {
+      "_id": "req_close_session",
+      "_type": "request",
+      "name": "Close Session",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/sessions/{id}/close",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"finalCash\": 850.00,\n  \"observations\": \"Fechamento normal\"\n}"
+      },
+      "parentId": "folder_sessions"
+    },
+    {
+      "_id": "folder_sales",
+      "_type": "request_group",
+      "name": "💰 Vendas",
+      "parentId": "wrk_insanos_stock"
+    },
+    {
+      "_id": "req_list_sales",
+      "_type": "request",
+      "name": "List All Sales",
+      "method": "GET",
+      "url": "{{ _.base_url }}/sales",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_sales"
+    },
+    {
+      "_id": "req_sales_by_session",
+      "_type": "request",
+      "name": "Sales by Session",
+      "method": "GET",
+      "url": "{{ _.base_url }}/sales?sessionId={sessionId}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_sales"
+    },
+    {
+      "_id": "req_get_sale",
+      "_type": "request",
+      "name": "Get Sale by ID",
+      "method": "GET",
+      "url": "{{ _.base_url }}/sales/{id}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_sales"
+    },
+    {
+      "_id": "req_create_sale",
+      "_type": "request",
+      "name": "Create Sale",
+      "method": "POST",
+      "url": "{{ _.base_url }}/sales",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"sessionId\": \"uuid-sessao-ativa\",\n  \"customerName\": \"João Silva\",\n  \"paymentMethod\": \"PIX\",\n  \"discount\": 0.00,\n  \"observations\": \"Venda teste\",\n  \"items\": [\n    {\n      \"productId\": \"uuid-produto-1\",\n      \"quantity\": 6\n    },\n    {\n      \"productId\": \"uuid-produto-2\",\n      \"quantity\": 12\n    }\n  ]\n}"
+      },
+      "parentId": "folder_sales"
+    },
+    {
+      "_id": "folder_movements",
+      "_type": "request_group",
+      "name": "📊 Movimentações",
+      "parentId": "wrk_insanos_stock"
+    },
+    {
+      "_id": "req_list_movements",
+      "_type": "request",
+      "name": "List All Movements",
+      "method": "GET",
+      "url": "{{ _.base_url }}/stock-movements",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_movements"
+    },
+    {
+      "_id": "req_movements_by_product",
+      "_type": "request",
+      "name": "Movements by Product",
+      "method": "GET",
+      "url": "{{ _.base_url }}/stock-movements?productId={productId}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_movements"
+    },
+    {
+      "_id": "req_create_movement",
+      "_type": "request",
+      "name": "Create Movement",
+      "method": "POST",
+      "url": "{{ _.base_url }}/stock-movements",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"productId\": \"uuid-produto\",\n  \"type\": \"ENTRADA\",\n  \"quantity\": 48,\n  \"reason\": \"Compra semanal\",\n  \"sessionId\": \"uuid-sessao\"\n}"
+      },
+      "parentId": "folder_movements"
+    },
+    {
+      "_id": "folder_reports",
+      "_type": "request_group",
+      "name": "📈 Relatórios",
+      "parentId": "wrk_insanos_stock"
+    },
+    {
+      "_id": "req_session_report",
+      "_type": "request",
+      "name": "Session Report (JSON)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/reports/session/{sessionId}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_reports"
+    },
+    {
+      "_id": "req_session_pdf",
+      "_type": "request",
+      "name": "Session Report (PDF)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/reports/pdf/session/{sessionId}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token }}"
+        }
+      ],
+      "parentId": "folder_reports"
+    },
+    {
+      "_id": "folder_health",
+      "_type": "request_group",
+      "name": "🏥 Health Check",
+      "parentId": "wrk_insanos_stock"
+    },
+    {
+      "_id": "req_health",
+      "_type": "request",
+      "name": "Health Check",
+      "method": "GET",
+      "url": "{{ _.base_url }}/health",
+      "parentId": "folder_health"
+    },
+    {
+      "_id": "req_ping",
+      "_type": "request",
+      "name": "Ping",
+      "method": "GET",
+      "url": "{{ _.base_url }}/ping",
+      "parentId": "folder_health"
+    },
+    {
+      "_id": "req_status",
+      "_type": "request",
+      "name": "Status",
+      "method": "GET",
+      "url": "{{ _.base_url }}/status",
+      "parentId": "folder_health"
+    },
+    {
+      "_id": "req_root",
+      "_type": "request",
+      "name": "API Info",
+      "method": "GET",
+      "url": "{{ _.base_url }}/",
+      "parentId": "folder_health"
+    }
+  ]
+}
+

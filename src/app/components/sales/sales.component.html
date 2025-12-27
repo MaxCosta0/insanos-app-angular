@@ -1,0 +1,113 @@
+<div class="sales-container">
+  <div class="page-header">
+    <h1>💰 PDV - Ponto de Venda</h1>
+    <div class="session-info" *ngIf="activeSession">
+      <span class="active-badge">🟢 {{ activeSession.name }}</span>
+    </div>
+  </div>
+
+  <div class="sales-grid">
+    <!-- Produtos -->
+    <div class="products-panel">
+      <div class="panel-header">
+        <h2>📦 Produtos</h2>
+        <input
+          type="text"
+          placeholder="🔍 Buscar produto..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="filterProducts()"
+          class="search-input"
+        />
+      </div>
+      <div class="products-grid">
+        <div class="product-item" *ngFor="let product of filteredProducts" (click)="addToCart(product)">
+          <h4>{{ product.name }}</h4>
+          <p class="category">{{ product.category }}</p>
+          <p class="price">{{ formatCurrency(product.salePrice) }}</p>
+          <p class="stock">Estoque: {{ product.currentStock }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrinho -->
+    <div class="cart-panel">
+      <div class="panel-header">
+        <h2>🛒 Carrinho</h2>
+        <button class="btn-clear" (click)="clearCart()" *ngIf="cart.length > 0">Limpar</button>
+      </div>
+
+      <div class="cart-empty" *ngIf="cart.length === 0">
+        <p>🛒 Carrinho vazio</p>
+        <p>Selecione produtos para adicionar</p>
+      </div>
+
+      <div class="cart-items" *ngIf="cart.length > 0">
+        <div class="cart-item" *ngFor="let item of cart; let i = index">
+          <div class="item-info">
+            <h4>{{ item.product.name }}</h4>
+            <p>{{ formatCurrency(item.product.salePrice) }} x {{ item.quantity }}</p>
+          </div>
+          <div class="item-controls">
+            <input
+              type="number"
+              min="1"
+              [value]="item.quantity"
+              (change)="updateQuantity(item, +$any($event.target).value)"
+              class="quantity-input"
+            />
+            <button class="btn-remove" (click)="removeFromCart(i)">🗑️</button>
+          </div>
+          <div class="item-subtotal">
+            {{ formatCurrency(item.subtotal) }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Detalhes da Venda -->
+      <div class="sale-details" *ngIf="cart.length > 0">
+        <div class="form-group">
+          <label>Cliente (opcional)</label>
+          <input type="text" [(ngModel)]="customerName" placeholder="Nome do cliente" />
+        </div>
+
+        <div class="form-group">
+          <label>Forma de Pagamento</label>
+          <select [(ngModel)]="paymentMethod">
+            <option *ngFor="let method of paymentMethods" [value]="method">
+              {{ method }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Desconto (R$)</label>
+          <input type="number" [(ngModel)]="discount" min="0" step="0.01" />
+        </div>
+
+        <div class="form-group">
+          <label>Observações</label>
+          <textarea [(ngModel)]="observations" rows="2" placeholder="Observações opcionais"></textarea>
+        </div>
+
+        <div class="totals">
+          <div class="total-row">
+            <span>Subtotal:</span>
+            <span>{{ formatCurrency(subtotal) }}</span>
+          </div>
+          <div class="total-row" *ngIf="discount > 0">
+            <span>Desconto:</span>
+            <span class="discount">-{{ formatCurrency(discount) }}</span>
+          </div>
+          <div class="total-row final">
+            <span>TOTAL:</span>
+            <span>{{ formatCurrency(total) }}</span>
+          </div>
+        </div>
+
+        <button class="btn-finalize" (click)="finalizeSale()" [disabled]="!activeSession">
+          Finalizar Venda
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

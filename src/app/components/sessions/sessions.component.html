@@ -1,0 +1,121 @@
+<div class="sessions-container">
+  <div class="page-header">
+    <div>
+      <h1>🎯 Sessões</h1>
+      <p>Gerenciamento de sessões de operação</p>
+    </div>
+    <button class="btn-primary" (click)="showOpenModal = true" *ngIf="!activeSession">
+      + Abrir Nova Sessão
+    </button>
+    <button class="btn-danger" (click)="showCloseModal = true" *ngIf="activeSession">
+      Fechar Sessão Ativa
+    </button>
+  </div>
+
+  <!-- Sessão Ativa -->
+  <div class="active-session-card" *ngIf="activeSession">
+    <h2>🟢 Sessão Ativa</h2>
+    <h3>{{ activeSession.name }}</h3>
+    <div class="session-info">
+      <div class="info-item">
+        <span class="label">Iniciada em:</span>
+        <span class="value">{{ formatDate(activeSession.startedAt) }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Caixa inicial:</span>
+        <span class="value">{{ formatCurrency(activeSession.initialCash) }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Aberta por:</span>
+        <span class="value">{{ activeSession.openedBy }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Histórico de Sessões -->
+  <div class="sessions-list">
+    <h2>📋 Histórico de Sessões</h2>
+    <div class="session-card" *ngFor="let session of sessions">
+      <div class="session-header">
+        <h3>{{ session.name }}</h3>
+        <span class="status-badge" [class.active]="session.isActive" [class.closed]="!session.isActive">
+          {{ session.isActive ? '🟢 Ativa' : '🔴 Fechada' }}
+        </span>
+      </div>
+      <div class="session-details">
+        <div class="detail-row">
+          <span>Iniciada:</span>
+          <span>{{ formatDate(session.startedAt) }}</span>
+        </div>
+        <div class="detail-row" *ngIf="session.closedAt">
+          <span>Fechada:</span>
+          <span>{{ formatDate(session.closedAt) }}</span>
+        </div>
+        <div class="detail-row">
+          <span>Caixa inicial:</span>
+          <span>{{ formatCurrency(session.initialCash) }}</span>
+        </div>
+        <div class="detail-row" *ngIf="session.finalCash">
+          <span>Caixa final:</span>
+          <span>{{ formatCurrency(session.finalCash) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Abrir Sessão -->
+<div class="modal-overlay" *ngIf="showOpenModal" (click)="showOpenModal = false">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Abrir Nova Sessão</h2>
+      <button class="close-btn" (click)="showOpenModal = false">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Nome da Sessão *</label>
+        <input type="text" [(ngModel)]="openForm.name" placeholder="Ex: Sessão Sexta-feira" />
+      </div>
+      <div class="form-group">
+        <label>Caixa Inicial *</label>
+        <input type="number" [(ngModel)]="openForm.initialCash" step="0.01" min="0" />
+      </div>
+      <div class="form-group">
+        <label>Observações</label>
+        <textarea [(ngModel)]="openForm.observations" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="showOpenModal = false">Cancelar</button>
+      <button class="btn-primary" (click)="openSession()">Abrir Sessão</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Fechar Sessão -->
+<div class="modal-overlay" *ngIf="showCloseModal" (click)="showCloseModal = false">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Fechar Sessão Ativa</h2>
+      <button class="close-btn" (click)="showCloseModal = false">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="info-box">
+        <p><strong>Sessão:</strong> {{ activeSession?.name }}</p>
+        <p><strong>Caixa inicial:</strong> {{ formatCurrency(activeSession?.initialCash || 0) }}</p>
+      </div>
+      <div class="form-group">
+        <label>Caixa Final *</label>
+        <input type="number" [(ngModel)]="closeForm.finalCash" step="0.01" min="0" />
+      </div>
+      <div class="form-group">
+        <label>Observações</label>
+        <textarea [(ngModel)]="closeForm.observations" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="showCloseModal = false">Cancelar</button>
+      <button class="btn-danger" (click)="closeSession()">Fechar Sessão</button>
+    </div>
+  </div>
+</div>

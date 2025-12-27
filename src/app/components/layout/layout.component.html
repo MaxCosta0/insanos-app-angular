@@ -1,0 +1,69 @@
+<div class="layout-container" [class.sidebar-closed]="!sidebarOpen">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>🏍️ Insanos</h2>
+      <div class="header-actions">
+        <button class="theme-toggle-btn" (click)="toggleTheme()" [attr.aria-label]="isDarkTheme ? 'Alternar para modo diurno' : 'Alternar para modo noturno'">
+          {{ isDarkTheme ? '☀️' : '🌙' }}
+        </button>
+        <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+      </div>
+    </div>
+
+    <div class="session-status" *ngIf="activeSession">
+      <div class="status-badge active">● Sessão Ativa</div>
+      <p class="session-name">{{ activeSession.name }}</p>
+    </div>
+
+    <div class="session-status" *ngIf="!activeSession">
+      <div class="status-badge inactive">○ Sem Sessão</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+        <span class="icon">📊</span>
+        <span class="label">Dashboard</span>
+      </a>
+      <a routerLink="/sessions" routerLinkActive="active" class="nav-item">
+        <span class="icon">🎯</span>
+        <span class="label">Sessões</span>
+      </a>
+      <a routerLink="/sales" routerLinkActive="active" class="nav-item">
+        <span class="icon">💰</span>
+        <span class="label">Vendas (PDV)</span>
+      </a>
+      <a routerLink="/products" routerLinkActive="active" class="nav-item">
+        <span class="icon">📦</span>
+        <span class="label">Produtos</span>
+      </a>
+      <a routerLink="/stock-movements" routerLinkActive="active" class="nav-item">
+        <span class="icon">📊</span>
+        <span class="label">Movimentações</span>
+      </a>
+      <a routerLink="/categories" routerLinkActive="active" class="nav-item">
+        <span class="icon">🏷️</span>
+        <span class="label">Categorias</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info" *ngIf="user">
+        <span class="user-icon">👤</span>
+        <div class="user-details">
+          <p class="user-name">{{ user.name }}</p>
+          <p class="user-email">{{ user.email }}</p>
+        </div>
+      </div>
+      <button class="btn-logout" (click)="logout()">
+        <span class="icon">🚪</span>
+        <span class="label">Sair</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
