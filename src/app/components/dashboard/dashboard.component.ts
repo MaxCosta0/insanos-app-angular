@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
         // Garantir que products é um array
         const productArray = Array.isArray(products) ? products : [];
         this.totalProducts = productArray.length;
-        this.totalStockValue = productArray.reduce((sum, p) => sum + (p.currentStock * p.costPrice), 0);
+        this.totalStockValue = productArray.reduce((sum, p) => sum + (p.estoqueAtual * p.precoCusto), 0);
       },
       error: (err) => {
         console.error('Erro ao carregar produtos:', err);

@@ -18,9 +18,11 @@ export class ProductService {
     lowStock?: boolean;
   }): Observable<Product[]> {
     let params = new HttpParams();
-    if (filters?.search) params = params.set('search', filters.search);
-    if (filters?.category) params = params.set('category', filters.category);
-    if (filters?.lowStock) params = params.set('lowStock', 'true');
+    if (filters?.search) params = params.set('busca', filters.search);
+    if (filters?.category) params = params.set('categoria', filters.category);
+    if (filters?.lowStock) params = params.set('estoqueBaixo', 'true');
+
+    console.log(`Chamando api com URL: ${this.apiUrl} e parâmetros: ${params.toString()}`);
 
     return this.http.get<Product[]>(this.apiUrl, { params });
   }
@@ -30,6 +32,7 @@ export class ProductService {
   }
 
   create(product: CreateProductDTO): Observable<Product> {
+    console.log('Criando produto:', product);
     return this.http.post<Product>(this.apiUrl, product);
   }
 

@@ -48,7 +48,7 @@ export class SalesComponent implements OnInit {
     this.productService.getAll({ lowStock: false }).subscribe({
       next: (products) => {
         const productArray = Array.isArray(products) ? products : [];
-        this.products = productArray.filter(p => p.isActive);
+        this.products = productArray.filter(p => p.ativo);
         this.filteredProducts = this.products;
       },
       error: (err) => {
@@ -76,7 +76,7 @@ export class SalesComponent implements OnInit {
       this.filteredProducts = this.products;
     } else {
       this.filteredProducts = this.products.filter(p =>
-        p.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+        p.nome.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
   }
@@ -85,12 +85,12 @@ export class SalesComponent implements OnInit {
     const existing = this.cart.find(item => item.product.id === product.id);
     if (existing) {
       existing.quantity++;
-      existing.subtotal = existing.quantity * product.salePrice;
+      existing.subtotal = existing.quantity * product.precoVenda;
     } else {
       this.cart.push({
         product,
         quantity: 1,
-        subtotal: product.salePrice
+        subtotal: product.precoVenda
       });
     }
   }
@@ -102,7 +102,7 @@ export class SalesComponent implements OnInit {
   updateQuantity(item: CartItem, quantity: number): void {
     if (quantity > 0) {
       item.quantity = quantity;
-      item.subtotal = item.quantity * item.product.salePrice;
+      item.subtotal = item.quantity * item.product.precoVenda;
     }
   }
 
@@ -126,14 +126,14 @@ export class SalesComponent implements OnInit {
     }
 
     const sale: CreateSaleDTO = {
-      sessionId: this.activeSession.id,
-      customerName: this.customerName || undefined,
-      paymentMethod: this.paymentMethod,
-      discount: this.discount,
-      observations: this.observations || undefined,
-      items: this.cart.map(item => ({
-        productId: item.product.id,
-        quantity: item.quantity
+      sessaoId: this.activeSession.id,
+      nomeCliente: this.customerName || undefined,
+      metodoPagamento: this.paymentMethod,
+      desconto: this.discount,
+      observacoes: this.observations || undefined,
+      itens: this.cart.map(item => ({
+        produtoId: item.product.id,
+        quantidade: item.quantity
       }))
     };
 

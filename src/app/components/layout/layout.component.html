@@ -13,7 +13,7 @@
 
     <div class="session-status" *ngIf="activeSession">
       <div class="status-badge active">● Sessão Ativa</div>
-      <p class="session-name">{{ activeSession.name }}</p>
+      <p class="session-name">{{ activeSession.nome }}</p>
     </div>
 
     <div class="session-status" *ngIf="!activeSession">
@@ -41,17 +41,13 @@
         <span class="icon">📊</span>
         <span class="label">Movimentações</span>
       </a>
-      <a routerLink="/categories" routerLinkActive="active" class="nav-item">
-        <span class="icon">🏷️</span>
-        <span class="label">Categorias</span>
-      </a>
     </nav>
 
     <div class="sidebar-footer">
       <div class="user-info" *ngIf="user">
         <span class="user-icon">👤</span>
         <div class="user-details">
-          <p class="user-name">{{ user.name }}</p>
+          <p class="user-name">{{ user.nome }}</p>
           <p class="user-email">{{ user.email }}</p>
         </div>
       </div>

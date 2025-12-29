@@ -1,38 +1,38 @@
 export interface Sale {
   id: string;
-  sessionId: string;
-  customerName?: string;
-  paymentMethod: PaymentMethod;
+  sessaoId: string;
+  nomeCliente?: string;
+  metodoPagamento: PaymentMethod;
   subtotal: number;
-  discount: number;
+  desconto: number;
   total: number;
-  items: SaleItem[];
-  soldBy: string;
-  observations?: string;
-  createdAt: Date;
+  itens: SaleItem[];
+  vendidoPor: string;
+  observacoes?: string;
+  criadoEm: string;
 }
 
 export interface SaleItem {
   id: string;
-  productId: string;
-  productName?: string;
-  quantity: number;
-  unitPrice: number;
+  produtoId: string;
+  nomeProduto?: string;
+  quantidade: number;
+  precoUnitario: number;
   subtotal: number;
 }
 
 export interface CreateSaleDTO {
-  sessionId: string;
-  customerName?: string;
-  paymentMethod: PaymentMethod;
-  discount?: number;
-  observations?: string;
-  items: CreateSaleItemDTO[];
+  sessaoId: string;
+  nomeCliente?: string;
+  metodoPagamento: PaymentMethod;
+  desconto?: number;
+  observacoes?: string;
+  itens: CreateSaleItemDTO[];
 }
 
 export interface CreateSaleItemDTO {
-  productId: string;
-  quantity: number;
+  produtoId: string;
+  quantidade: number;
 }
 
 export enum PaymentMethod {

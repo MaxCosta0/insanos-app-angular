@@ -32,7 +32,7 @@
         <div class="stat-info">
           <h3>Sessão</h3>
           <p class="stat-value">{{ activeSession ? 'Ativa' : 'Inativa' }}</p>
-          <p class="stat-subtitle" *ngIf="activeSession">{{ activeSession.name }}</p>
+          <p class="stat-subtitle" *ngIf="activeSession">{{ activeSession.nome }}</p>
         </div>
       </div>
 
@@ -55,12 +55,12 @@
       <div class="products-list">
         <div class="product-item" *ngFor="let product of lowStockProducts">
           <div class="product-info">
-            <h4>{{ product.name }}</h4>
-            <p>{{ product.category }}</p>
+            <h4>{{ product.nome }}</h4>
+            <p>{{ product.categoria }}</p>
           </div>
           <div class="product-stock">
             <span class="stock-badge low">
-              {{ product.currentStock }} / {{ product.minStock }}
+              {{ product.estoqueAtual }} / {{ product.estoqueMinimo }}
             </span>
           </div>
         </div>

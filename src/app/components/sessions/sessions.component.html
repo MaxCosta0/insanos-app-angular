@@ -15,19 +15,19 @@
   <!-- Sessão Ativa -->
   <div class="active-session-card" *ngIf="activeSession">
     <h2>🟢 Sessão Ativa</h2>
-    <h3>{{ activeSession.name }}</h3>
+    <h3>{{ activeSession.nome }}</h3>
     <div class="session-info">
       <div class="info-item">
         <span class="label">Iniciada em:</span>
-        <span class="value">{{ formatDate(activeSession.startedAt) }}</span>
+        <span class="value">{{ formatDate(activeSession.iniciadaEm) }}</span>
       </div>
       <div class="info-item">
         <span class="label">Caixa inicial:</span>
-        <span class="value">{{ formatCurrency(activeSession.initialCash) }}</span>
+        <span class="value">{{ formatCurrency(activeSession.caixaInicial) }}</span>
       </div>
       <div class="info-item">
         <span class="label">Aberta por:</span>
-        <span class="value">{{ activeSession.openedBy }}</span>
+        <span class="value">{{ activeSession.abertaPor }}</span>
       </div>
     </div>
   </div>
@@ -37,27 +37,27 @@
     <h2>📋 Histórico de Sessões</h2>
     <div class="session-card" *ngFor="let session of sessions">
       <div class="session-header">
-        <h3>{{ session.name }}</h3>
-        <span class="status-badge" [class.active]="session.isActive" [class.closed]="!session.isActive">
-          {{ session.isActive ? '🟢 Ativa' : '🔴 Fechada' }}
+        <h3>{{ session.nome }}</h3>
+        <span class="status-badge" [class.active]="session.ativa" [class.closed]="!session.ativa">
+          {{ session.ativa ? '🟢 Ativa' : '🔴 Fechada' }}
         </span>
       </div>
       <div class="session-details">
         <div class="detail-row">
           <span>Iniciada:</span>
-          <span>{{ formatDate(session.startedAt) }}</span>
+          <span>{{ formatDate(session.iniciadaEm) }}</span>
         </div>
-        <div class="detail-row" *ngIf="session.closedAt">
+        <div class="detail-row" *ngIf="session.fechadaEm">
           <span>Fechada:</span>
-          <span>{{ formatDate(session.closedAt) }}</span>
+          <span>{{ formatDate(session.fechadaEm) }}</span>
         </div>
         <div class="detail-row">
           <span>Caixa inicial:</span>
-          <span>{{ formatCurrency(session.initialCash) }}</span>
+          <span>{{ formatCurrency(session.caixaInicial) }}</span>
         </div>
-        <div class="detail-row" *ngIf="session.finalCash">
+        <div class="detail-row" *ngIf="session.caixaFinal">
           <span>Caixa final:</span>
-          <span>{{ formatCurrency(session.finalCash) }}</span>
+          <span>{{ formatCurrency(session.caixaFinal) }}</span>
         </div>
       </div>
     </div>
@@ -74,15 +74,15 @@
     <div class="modal-body">
       <div class="form-group">
         <label>Nome da Sessão *</label>
-        <input type="text" [(ngModel)]="openForm.name" placeholder="Ex: Sessão Sexta-feira" />
+        <input type="text" [(ngModel)]="openForm.nome" placeholder="Ex: Sessão Sexta-feira" />
       </div>
       <div class="form-group">
         <label>Caixa Inicial *</label>
-        <input type="number" [(ngModel)]="openForm.initialCash" step="0.01" min="0" />
+        <input type="number" [(ngModel)]="openForm.caixaInicial" step="0.01" min="0" />
       </div>
       <div class="form-group">
         <label>Observações</label>
-        <textarea [(ngModel)]="openForm.observations" rows="3"></textarea>
+        <textarea [(ngModel)]="openForm.observacoes" rows="3"></textarea>
       </div>
     </div>
     <div class="modal-footer">
@@ -101,16 +101,16 @@
     </div>
     <div class="modal-body">
       <div class="info-box">
-        <p><strong>Sessão:</strong> {{ activeSession?.name }}</p>
-        <p><strong>Caixa inicial:</strong> {{ formatCurrency(activeSession?.initialCash || 0) }}</p>
+        <p><strong>Sessão:</strong> {{ activeSession?.nome }}</p>
+        <p><strong>Caixa inicial:</strong> {{ formatCurrency(activeSession?.caixaInicial || 0) }}</p>
       </div>
       <div class="form-group">
         <label>Caixa Final *</label>
-        <input type="number" [(ngModel)]="closeForm.finalCash" step="0.01" min="0" />
+        <input type="number" [(ngModel)]="closeForm.caixaFinal" step="0.01" min="0" />
       </div>
       <div class="form-group">
         <label>Observações</label>
-        <textarea [(ngModel)]="closeForm.observations" rows="3"></textarea>
+        <textarea [(ngModel)]="closeForm.observacoes" rows="3"></textarea>
       </div>
     </div>
     <div class="modal-footer">

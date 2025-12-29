@@ -17,8 +17,8 @@ export class SessionsComponent implements OnInit {
   showOpenModal = false;
   showCloseModal = false;
 
-  openForm: OpenSessionDTO = { name: '', initialCash: 0, observations: '' };
-  closeForm: CloseSessionDTO = { finalCash: 0, observations: '' };
+  openForm: OpenSessionDTO = { nome: '', caixaInicial: 0, observacoes: '' };
+  closeForm: CloseSessionDTO = { caixaFinal: 0, observacoes: '' };
 
   constructor(private sessionService: SessionService) {}
 
@@ -32,7 +32,7 @@ export class SessionsComponent implements OnInit {
       next: (sessions) => {
         const sessionArray = Array.isArray(sessions) ? sessions : [];
         this.sessions = sessionArray.sort((a, b) => 
-          new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime()
+          new Date(b.iniciadaEm).getTime() - new Date(a.iniciadaEm).getTime()
         );
       },
       error: (err) => {
@@ -59,7 +59,7 @@ export class SessionsComponent implements OnInit {
         this.showOpenModal = false;
         this.loadSessions();
         this.loadActiveSession();
-        this.openForm = { name: '', initialCash: 0, observations: '' };
+        this.openForm = { nome: '', caixaInicial: 0, observacoes: '' };
       }
     });
   }
@@ -71,7 +71,7 @@ export class SessionsComponent implements OnInit {
           this.showCloseModal = false;
           this.loadSessions();
           this.loadActiveSession();
-          this.closeForm = { finalCash: 0, observations: '' };
+          this.closeForm = { caixaFinal: 0, observacoes: '' };
         }
       });
     }
@@ -81,7 +81,7 @@ export class SessionsComponent implements OnInit {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
   }
 
-  formatDate(date: Date): string {
+  formatDate(date: Date | string): string {
     return new Date(date).toLocaleString('pt-BR');
   }
 }

@@ -5,7 +5,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProductsComponent } from './components/products/products.component';
 import { SessionsComponent } from './components/sessions/sessions.component';
 import { SalesComponent } from './components/sales/sales.component';
-import { CategoriesComponent } from './components/categories/categories.component';
 import { StockMovementsComponent } from './components/stock-movements/stock-movements.component';
 import { authGuard } from './guards/auth.guard';
 
@@ -39,10 +38,6 @@ export const routes: Routes = [
       {
         path: 'sales',
         component: SalesComponent
-      },
-      {
-        path: 'categories',
-        component: CategoriesComponent
       },
       {
         path: 'stock-movements',

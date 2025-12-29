@@ -21,7 +21,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
         this.setToken(response.token);
-        this.userSubject.next(response.user);
+        this.userSubject.next(response.usuario);
       })
     );
   }

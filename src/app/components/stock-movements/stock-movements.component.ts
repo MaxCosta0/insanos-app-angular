@@ -20,13 +20,13 @@ import { Product } from '../../models/product.model';
       <div class="movements-list">
         <div class="movement-card" *ngFor="let movement of movements">
           <div class="movement-header">
-            <h3>{{ movement.productName || 'Produto' }}</h3>
-            <span class="type-badge" [class]="movement.type">{{ movement.type }}</span>
+            <h3>{{ movement.nomeProduto || 'Produto' }}</h3>
+            <span class="type-badge" [class]="movement.tipo">{{ movement.tipo }}</span>
           </div>
           <div class="movement-details">
-            <p><strong>Quantidade:</strong> {{ movement.quantity }}</p>
-            <p><strong>Data:</strong> {{ formatDate(movement.createdAt) }}</p>
-            <p *ngIf="movement.reason"><strong>Motivo:</strong> {{ movement.reason }}</p>
+            <p><strong>Quantidade:</strong> {{ movement.quantidade }}</p>
+            <p><strong>Data:</strong> {{ formatDate(movement.criadoEm) }}</p>
+            <p *ngIf="movement.motivo"><strong>Motivo:</strong> {{ movement.motivo }}</p>
           </div>
         </div>
       </div>
@@ -41,16 +41,16 @@ import { Product } from '../../models/product.model';
         <div class="modal-body">
           <div class="form-group">
             <label>Produto *</label>
-            <select [(ngModel)]="movementForm.productId">
+            <select [(ngModel)]="movementForm.produtoId">
               <option value="">Selecione...</option>
               <option *ngFor="let product of products" [value]="product.id">
-                {{ product.name }}
+                {{ product.nome }}
               </option>
             </select>
           </div>
           <div class="form-group">
             <label>Tipo *</label>
-            <select [(ngModel)]="movementForm.type">
+            <select [(ngModel)]="movementForm.tipo">
               <option value="ENTRADA">Entrada</option>
               <option value="SAIDA">Saída</option>
               <option value="AJUSTE">Ajuste</option>
@@ -58,11 +58,11 @@ import { Product } from '../../models/product.model';
           </div>
           <div class="form-group">
             <label>Quantidade *</label>
-            <input type="number" [(ngModel)]="movementForm.quantity" min="1" />
+            <input type="number" [(ngModel)]="movementForm.quantidade" min="1" />
           </div>
           <div class="form-group">
             <label>Motivo</label>
-            <input type="text" [(ngModel)]="movementForm.reason" />
+            <input type="text" [(ngModel)]="movementForm.motivo" />
           </div>
         </div>
         <div class="modal-footer">
@@ -205,10 +205,10 @@ export class StockMovementsComponent implements OnInit {
   products: Product[] = [];
   showModal = false;
   movementForm: CreateStockMovementDTO = {
-    productId: '',
-    type: MovementType.ENTRADA,
-    quantity: 1,
-    reason: ''
+    produtoId: '',
+    tipo: MovementType.ENTRADA,
+    quantidade: 1,
+    motivo: ''
   };
 
   constructor(
@@ -226,7 +226,7 @@ export class StockMovementsComponent implements OnInit {
       next: (movements) => {
         const movementArray = Array.isArray(movements) ? movements : [];
         this.movements = movementArray.sort((a, b) => 
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          new Date(b.criadoEm).getTime() - new Date(a.criadoEm).getTime()
         );
       },
       error: (err) => {
@@ -254,16 +254,16 @@ export class StockMovementsComponent implements OnInit {
         this.loadMovements();
         this.showModal = false;
         this.movementForm = {
-          productId: '',
-          type: MovementType.ENTRADA,
-          quantity: 1,
-          reason: ''
+          produtoId: '',
+          tipo: MovementType.ENTRADA,
+          quantidade: 1,
+          motivo: ''
         };
       }
     });
   }
 
-  formatDate(date: Date): string {
+  formatDate(date: Date | string): string {
     return new Date(date).toLocaleString('pt-BR');
   }
 }

@@ -1,21 +1,23 @@
 export interface StockMovement {
   id: string;
-  productId: string;
-  productName?: string;
-  type: MovementType;
-  quantity: number;
-  reason?: string;
-  sessionId?: string;
-  performedBy: string;
-  createdAt: Date;
+  produtoId: string;
+  nomeProduto?: string;
+  tipo: MovementType;
+  quantidade: number;
+  motivo?: string;
+  sessaoId?: string;
+  realizadoPor: string;
+  observacoes?: string;
+  criadoEm: string;
 }
 
 export interface CreateStockMovementDTO {
-  productId: string;
-  type: MovementType;
-  quantity: number;
-  reason?: string;
-  sessionId?: string;
+  produtoId: string;
+  tipo: MovementType;
+  quantidade: number;
+  motivo?: string;
+  sessaoId?: string;
+  observacoes?: string;
 }
 
 export enum MovementType {

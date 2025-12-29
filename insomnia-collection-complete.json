@@ -1,14 +1,14 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2025-12-16T22:00:00.000Z",
+  "__export_date": "2025-12-28T00:00:00.000Z",
   "__export_source": "insomnia.desktop.app:v2023.5.8",
   "resources": [
     {
       "_id": "wrk_insanos_stock",
       "_type": "workspace",
       "name": "Insanos Stock API",
-      "description": "API de controle de estoque do Insanos Motoclube",
+      "description": "API de controle de estoque do Insanos Motoclube - Versão Atualizada",
       "scope": "collection"
     },
     {
@@ -25,12 +25,14 @@
       "_id": "folder_auth",
       "_type": "request_group",
       "name": "🔐 Autenticação",
+      "description": "Endpoints de autenticação e autorização",
       "parentId": "wrk_insanos_stock"
     },
     {
       "_id": "req_login",
       "_type": "request",
       "name": "Login",
+      "description": "Realiza login e retorna dados do usuário.\n\nResposta direta: RespostaAuth",
       "method": "POST",
       "url": "{{ _.base_url }}/auth/login",
       "headers": [
@@ -49,6 +51,7 @@
       "_id": "req_me",
       "_type": "request",
       "name": "Get Current User",
+      "description": "Retorna informações do usuário autenticado.\n\nResposta direta: RespostaAuth",
       "method": "GET",
       "url": "{{ _.base_url }}/auth/me",
       "headers": [
@@ -63,153 +66,92 @@
       "_id": "folder_categories",
       "_type": "request_group",
       "name": "🏷️ Categorias",
+      "description": "Categorias são gerenciadas no banco de dados - apenas leitura via API",
       "parentId": "wrk_insanos_stock"
     },
     {
       "_id": "req_list_categories",
       "_type": "request",
       "name": "List Categories",
+      "description": "Lista todas as categorias.\n\nCategorias padrão:\n- Energeticos ⚡\n- Cervejas 🍺\n- Aguas 💧\n- Mistas 🍹\n- Outros 📦\n\nResposta direta: List<RespostaCategoria>",
       "method": "GET",
       "url": "{{ _.base_url }}/categories",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
-      "parentId": "folder_categories"
-    },
-    {
-      "_id": "req_create_category",
-      "_type": "request",
-      "name": "Create Category",
-      "method": "POST",
-      "url": "{{ _.base_url }}/categories",
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json"
-        },
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Nova Categoria\",\n  \"icon\": \"📦\"\n}"
-      },
-      "parentId": "folder_categories"
-    },
-    {
-      "_id": "req_delete_category",
-      "_type": "request",
-      "name": "Delete Category",
-      "method": "DELETE",
-      "url": "{{ _.base_url }}/categories/{id}",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "headers": [],
       "parentId": "folder_categories"
     },
     {
       "_id": "folder_products",
       "_type": "request_group",
       "name": "📦 Produtos",
+      "description": "CRUD completo de produtos",
       "parentId": "wrk_insanos_stock"
     },
     {
       "_id": "req_list_products",
       "_type": "request",
       "name": "List All Products",
+      "description": "Lista todos os produtos.\n\nResposta direta: List<RespostaProduto>",
       "method": "GET",
       "url": "{{ _.base_url }}/products",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "headers": [],
       "parentId": "folder_products"
     },
     {
       "_id": "req_search_products",
       "_type": "request",
       "name": "Search Products",
+      "description": "Busca produtos por nome ou código de barras.\n\nResposta direta: List<RespostaProduto>",
       "method": "GET",
-      "url": "{{ _.base_url }}/products?search=cerveja",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "url": "{{ _.base_url }}/products?busca=coca",
+      "headers": [],
       "parentId": "folder_products"
     },
     {
       "_id": "req_products_by_category",
       "_type": "request",
       "name": "Products by Category",
+      "description": "Filtra produtos por categoria.\n\nResposta direta: List<RespostaProduto>",
       "method": "GET",
-      "url": "{{ _.base_url }}/products?category=Bebidas",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "url": "{{ _.base_url }}/products?categoria=Cervejas",
+      "headers": [],
       "parentId": "folder_products"
     },
     {
       "_id": "req_low_stock_products",
       "_type": "request",
       "name": "Low Stock Products",
+      "description": "Lista produtos com estoque abaixo do mínimo.\n\nResposta direta: List<RespostaProduto>",
       "method": "GET",
-      "url": "{{ _.base_url }}/products?lowStock=true",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "url": "{{ _.base_url }}/products?estoqueBaixo=true",
+      "headers": [],
       "parentId": "folder_products"
     },
     {
       "_id": "req_get_product",
       "_type": "request",
       "name": "Get Product by ID",
+      "description": "Busca um produto específico por ID.\n\nResposta direta: RespostaProduto",
       "method": "GET",
       "url": "{{ _.base_url }}/products/{id}",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "headers": [],
       "parentId": "folder_products"
     },
     {
       "_id": "req_create_product",
       "_type": "request",
       "name": "Create Product",
+      "description": "Cria um novo produto.\n\nResposta: 201 Created\nCorpo: RespostaProduto (direto)",
       "method": "POST",
       "url": "{{ _.base_url }}/products",
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
-        },
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
         }
       ],
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Cerveja Skol 350ml\",\n  \"barcode\": \"7891234567890\",\n  \"category\": \"Bebidas\",\n  \"costPrice\": 2.50,\n  \"salePrice\": 4.00,\n  \"minStock\": 24\n}"
+        "text": "{\n  \"nome\": \"Coca-Cola 2L\",\n  \"codigoBarras\": \"7891234567890\",\n  \"categoria\": \"Mistas\",\n  \"precoCusto\": 7.50,\n  \"precoVenda\": 12.00,\n  \"estoqueMinimo\": 10\n}"
       },
       "parentId": "folder_products"
     },
@@ -217,21 +159,18 @@
       "_id": "req_update_product",
       "_type": "request",
       "name": "Update Product",
+      "description": "Atualiza um produto existente.\n\nResposta direta: RespostaProduto",
       "method": "PUT",
       "url": "{{ _.base_url }}/products/{id}",
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
-        },
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
         }
       ],
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Cerveja Skol 350ml\",\n  \"barcode\": \"7891234567890\",\n  \"category\": \"Bebidas\",\n  \"costPrice\": 2.80,\n  \"salePrice\": 4.50,\n  \"minStock\": 36\n}"
+        "text": "{\n  \"nome\": \"Coca-Cola 2L\",\n  \"codigoBarras\": \"7891234567890\",\n  \"categoria\": \"Mistas\",\n  \"precoCusto\": 8.00,\n  \"precoVenda\": 13.00,\n  \"estoqueMinimo\": 12\n}"
       },
       "parentId": "folder_products"
     },
@@ -239,83 +178,65 @@
       "_id": "req_delete_product",
       "_type": "request",
       "name": "Delete Product",
+      "description": "Remove um produto.\n\nResposta: 200 OK (sem corpo)",
       "method": "DELETE",
       "url": "{{ _.base_url }}/products/{id}",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "headers": [],
       "parentId": "folder_products"
     },
     {
       "_id": "folder_sessions",
       "_type": "request_group",
       "name": "🎯 Sessões",
+      "description": "Gerenciamento de sessões de caixa",
       "parentId": "wrk_insanos_stock"
     },
     {
       "_id": "req_list_sessions",
       "_type": "request",
       "name": "List All Sessions",
+      "description": "Lista todas as sessões.\n\nResposta direta: List<RespostaSessao>",
       "method": "GET",
       "url": "{{ _.base_url }}/sessions",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "headers": [],
       "parentId": "folder_sessions"
     },
     {
       "_id": "req_active_session",
       "_type": "request",
       "name": "Get Active Session",
+      "description": "Retorna a sessão ativa no momento.\n\nResposta direta: RespostaSessao",
       "method": "GET",
       "url": "{{ _.base_url }}/sessions/active",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "headers": [],
       "parentId": "folder_sessions"
     },
     {
       "_id": "req_get_session",
       "_type": "request",
       "name": "Get Session by ID",
+      "description": "Busca uma sessão específica.\n\nResposta direta: RespostaSessao",
       "method": "GET",
       "url": "{{ _.base_url }}/sessions/{id}",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "headers": [],
       "parentId": "folder_sessions"
     },
     {
       "_id": "req_open_session",
       "_type": "request",
       "name": "Open Session",
+      "description": "Abre uma nova sessão de caixa.\n\nResposta: 201 Created\nCorpo: RespostaSessao (direto)",
       "method": "POST",
       "url": "{{ _.base_url }}/sessions",
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
-        },
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
         }
       ],
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Sessão 16/12\",\n  \"initialCash\": 100.00,\n  \"observations\": \"Sessão de teste\"\n}"
+        "text": "{\n  \"nome\": \"Sessão 28/12\",\n  \"caixaInicial\": 100.00,\n  \"observacoes\": \"Sessão da noite\"\n}"
       },
       "parentId": "folder_sessions"
     },
@@ -323,21 +244,18 @@
       "_id": "req_close_session",
       "_type": "request",
       "name": "Close Session",
+      "description": "Fecha uma sessão de caixa.\n\nResposta direta: RespostaSessao",
       "method": "PUT",
       "url": "{{ _.base_url }}/sessions/{id}/close",
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
-        },
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
         }
       ],
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"finalCash\": 850.00,\n  \"observations\": \"Fechamento normal\"\n}"
+        "text": "{\n  \"caixaFinal\": 1250.00,\n  \"observacoes\": \"Fechamento normal\"\n}"
       },
       "parentId": "folder_sessions"
     },
@@ -345,125 +263,101 @@
       "_id": "folder_sales",
       "_type": "request_group",
       "name": "💰 Vendas",
+      "description": "Gerenciamento de vendas",
       "parentId": "wrk_insanos_stock"
     },
     {
       "_id": "req_list_sales",
       "_type": "request",
       "name": "List All Sales",
+      "description": "Lista todas as vendas.\n\nResposta direta: List<VendaResponse>",
       "method": "GET",
       "url": "{{ _.base_url }}/sales",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "headers": [],
       "parentId": "folder_sales"
     },
     {
       "_id": "req_sales_by_session",
       "_type": "request",
       "name": "Sales by Session",
+      "description": "Lista vendas de uma sessão específica.\n\nResposta direta: List<VendaResponse>",
       "method": "GET",
-      "url": "{{ _.base_url }}/sales?sessionId={sessionId}",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "url": "{{ _.base_url }}/sales?sessaoId={sessionId}",
+      "headers": [],
       "parentId": "folder_sales"
     },
     {
       "_id": "req_get_sale",
       "_type": "request",
       "name": "Get Sale by ID",
+      "description": "Busca uma venda específica.\n\nResposta direta: VendaResponse",
       "method": "GET",
       "url": "{{ _.base_url }}/sales/{id}",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "headers": [],
       "parentId": "folder_sales"
     },
     {
       "_id": "req_create_sale",
       "_type": "request",
       "name": "Create Sale",
+      "description": "Registra uma nova venda.\n\nResposta: 201 Created\nCorpo: VendaResponse (direto)",
       "method": "POST",
       "url": "{{ _.base_url }}/sales",
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
-        },
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
         }
       ],
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"sessionId\": \"uuid-sessao-ativa\",\n  \"customerName\": \"João Silva\",\n  \"paymentMethod\": \"PIX\",\n  \"discount\": 0.00,\n  \"observations\": \"Venda teste\",\n  \"items\": [\n    {\n      \"productId\": \"uuid-produto-1\",\n      \"quantity\": 6\n    },\n    {\n      \"productId\": \"uuid-produto-2\",\n      \"quantity\": 12\n    }\n  ]\n}"
+        "text": "{\n  \"sessaoId\": \"uuid-sessao-ativa\",\n  \"nomeCliente\": \"João Silva\",\n  \"metodoPagamento\": \"PIX\",\n  \"desconto\": 0.00,\n  \"observacoes\": \"Venda completa\",\n  \"itens\": [\n    {\n      \"produtoId\": \"uuid-produto-1\",\n      \"quantidade\": 6\n    },\n    {\n      \"produtoId\": \"uuid-produto-2\",\n      \"quantidade\": 12\n    }\n  ]\n}"
       },
       "parentId": "folder_sales"
     },
     {
       "_id": "folder_movements",
       "_type": "request_group",
-      "name": "📊 Movimentações",
+      "name": "📊 Movimentações de Estoque",
+      "description": "Controle de movimentações de estoque",
       "parentId": "wrk_insanos_stock"
     },
     {
       "_id": "req_list_movements",
       "_type": "request",
       "name": "List All Movements",
+      "description": "Lista todas as movimentações.\n\nResposta direta: List<RespostaMovimentoEstoque>",
       "method": "GET",
       "url": "{{ _.base_url }}/stock-movements",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "headers": [],
       "parentId": "folder_movements"
     },
     {
       "_id": "req_movements_by_product",
       "_type": "request",
       "name": "Movements by Product",
+      "description": "Lista movimentações de um produto específico.\n\nResposta direta: List<RespostaMovimentoEstoque>",
       "method": "GET",
-      "url": "{{ _.base_url }}/stock-movements?productId={productId}",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "url": "{{ _.base_url }}/stock-movements?produtoId={productId}",
+      "headers": [],
       "parentId": "folder_movements"
     },
     {
       "_id": "req_create_movement",
       "_type": "request",
       "name": "Create Movement",
+      "description": "Registra uma movimentação de estoque.\n\nResposta: 201 Created\nCorpo: RespostaMovimentoEstoque (direto)",
       "method": "POST",
       "url": "{{ _.base_url }}/stock-movements",
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
-        },
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
         }
       ],
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"productId\": \"uuid-produto\",\n  \"type\": \"ENTRADA\",\n  \"quantity\": 48,\n  \"reason\": \"Compra semanal\",\n  \"sessionId\": \"uuid-sessao\"\n}"
+        "text": "{\n  \"produtoId\": \"uuid-produto\",\n  \"tipo\": \"ENTRADA\",\n  \"quantidade\": 48,\n  \"motivo\": \"Compra semanal\",\n  \"sessaoId\": \"uuid-sessao\",\n  \"observacoes\": \"Chegada de estoque\"\n}"
       },
       "parentId": "folder_movements"
     },
@@ -471,72 +365,84 @@
       "_id": "folder_reports",
       "_type": "request_group",
       "name": "📈 Relatórios",
+      "description": "Relatórios e estatísticas",
       "parentId": "wrk_insanos_stock"
+    },
+    {
+      "_id": "req_dashboard_stats",
+      "_type": "request",
+      "name": "Dashboard Statistics",
+      "description": "Retorna estatísticas do painel.\n\nResposta direta: RespostaEstatisticasPainel",
+      "method": "GET",
+      "url": "{{ _.base_url }}/reports/dashboard",
+      "headers": [],
+      "parentId": "folder_reports"
     },
     {
       "_id": "req_session_report",
       "_type": "request",
       "name": "Session Report (JSON)",
+      "description": "Relatório completo de uma sessão em JSON.\n\nResposta direta: RespostaRelatorioSessao",
       "method": "GET",
-      "url": "{{ _.base_url }}/reports/session/{sessionId}",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "url": "{{ _.base_url }}/reports/sessao/{sessionId}",
+      "headers": [],
       "parentId": "folder_reports"
     },
     {
       "_id": "req_session_pdf",
       "_type": "request",
       "name": "Session Report (PDF)",
+      "description": "Gera PDF do relatório da sessão.\n\nResposta: byte[] (application/pdf)",
       "method": "GET",
-      "url": "{{ _.base_url }}/reports/pdf/session/{sessionId}",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": "Bearer {{ _.token }}"
-        }
-      ],
+      "url": "{{ _.base_url }}/reports/pdf/sessao/{sessionId}",
+      "headers": [],
       "parentId": "folder_reports"
     },
     {
       "_id": "folder_health",
       "_type": "request_group",
       "name": "🏥 Health Check",
+      "description": "Endpoints de verificação de saúde da API",
       "parentId": "wrk_insanos_stock"
     },
     {
       "_id": "req_health",
       "_type": "request",
       "name": "Health Check",
+      "description": "Verificação básica de saúde.\n\nResposta direta: Map<String, Object>",
       "method": "GET",
       "url": "{{ _.base_url }}/health",
+      "headers": [],
       "parentId": "folder_health"
     },
     {
       "_id": "req_ping",
       "_type": "request",
       "name": "Ping",
+      "description": "Ping simples para verificar se API está respondendo.\n\nResposta direta: Map<String, Object>",
       "method": "GET",
       "url": "{{ _.base_url }}/ping",
+      "headers": [],
       "parentId": "folder_health"
     },
     {
       "_id": "req_status",
       "_type": "request",
       "name": "Status",
+      "description": "Status detalhado do sistema.\n\nResposta direta: Map<String, Object>",
       "method": "GET",
       "url": "{{ _.base_url }}/status",
+      "headers": [],
       "parentId": "folder_health"
     },
     {
       "_id": "req_root",
       "_type": "request",
       "name": "API Info",
+      "description": "Informações gerais da API.\n\nResposta direta: Map<String, Object>",
       "method": "GET",
       "url": "{{ _.base_url }}/",
+      "headers": [],
       "parentId": "folder_health"
     }
   ]

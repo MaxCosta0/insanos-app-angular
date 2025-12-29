@@ -5,13 +5,13 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   token: string;
-  user: User;
+  usuario: User;
 }
 
 export interface User {
   id: string;
-  name: string;
+  nome: string;
   email: string;
-  profile?: string;
-  createdAt?: Date;
+  perfil?: string;
+  criadoEm?: string;
 }

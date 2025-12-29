@@ -1,26 +1,26 @@
 export interface Product {
   id: string;
-  name: string;
-  barcode?: string;
-  category: string;
-  costPrice: number;
-  salePrice: number;
-  currentStock: number;
-  minStock: number;
-  isActive: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
+  nome: string;
+  codigoBarras?: string;
+  categoria: string;
+  precoCusto: number;
+  precoVenda: number;
+  estoqueAtual: number;
+  estoqueMinimo: number;
+  ativo: boolean;
+  criadoEm?: string;
+  atualizadoEm?: string;
 }
 
 export interface CreateProductDTO {
-  name: string;
-  barcode?: string;
-  category: string;
-  costPrice: number;
-  salePrice: number;
-  minStock: number;
+  nome: string;
+  codigoBarras?: string;
+  categoria: string;
+  precoCusto: number;
+  precoVenda: number;
+  estoqueMinimo: number;
 }
 
 export interface UpdateProductDTO extends CreateProductDTO {
-  isActive?: boolean;
+  ativo?: boolean;
 }

@@ -1,25 +1,25 @@
 export interface DashboardData {
-  totalProducts: number;
-  totalStockValue: number;
-  totalSales: number;
-  totalRevenue: number;
-  lowStockProducts: Array<{
+  totalProdutos: number;
+  valorEstoqueTotal: number;
+  totalVendas: number;
+  receitaTotal: number;
+  produtosEstoqueBaixo: Array<{
     id: string;
-    name: string;
-    currentStock: number;
-    minStock: number;
+    nome: string;
+    estoqueAtual: number;
+    estoqueMinimo: number;
   }>;
-  recentMovements: Array<{
+  movimentacoesRecentes: Array<{
     id: string;
-    productName: string;
-    type: string;
-    quantity: number;
-    createdAt: Date;
+    nomeProduto: string;
+    tipo: string;
+    quantidade: number;
+    criadoEm: string;
   }>;
-  activeSession?: {
+  sessaoAtiva?: {
     id: string;
-    name: string;
-    startedAt: Date;
-    initialCash: number;
+    nome: string;
+    iniciadaEm: string;
+    caixaInicial: number;
   };
 }

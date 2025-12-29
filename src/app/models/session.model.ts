@@ -1,40 +1,40 @@
 export interface PubSession {
   id: string;
-  name: string;
-  startedAt: Date;
-  closedAt?: Date;
-  initialCash: number;
-  finalCash?: number;
-  isActive: boolean;
-  openedBy: string;
-  closedBy?: string;
-  observations?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  nome: string;
+  iniciadaEm: string;
+  fechadaEm?: string;
+  caixaInicial: number;
+  caixaFinal?: number;
+  ativa: boolean;
+  abertaPor: string;
+  fechadaPor?: string;
+  observacoes?: string;
+  criadoEm?: string;
+  atualizadoEm?: string;
 }
 
 export interface OpenSessionDTO {
-  name: string;
-  initialCash: number;
-  observations?: string;
+  nome: string;
+  caixaInicial: number;
+  observacoes?: string;
 }
 
 export interface CloseSessionDTO {
-  finalCash: number;
-  observations?: string;
+  caixaFinal: number;
+  observacoes?: string;
 }
 
 export interface SessionReport {
-  session: PubSession;
-  totalSales: number;
-  totalRevenue: number;
-  totalCost: number;
-  totalProfit: number;
-  salesByPaymentMethod: { [key: string]: number };
-  topProducts: Array<{
-    productName: string;
-    quantity: number;
-    revenue: number;
+  sessao: PubSession;
+  totalVendas: number;
+  receitaTotal: number;
+  custoTotal: number;
+  lucroTotal: number;
+  vendasPorMetodoPagamento: { [key: string]: number };
+  produtosMaisVendidos: Array<{
+    nomeProduto: string;
+    quantidade: number;
+    receita: number;
   }>;
-  cashDifference?: number;
+  diferencaCaixa?: number;
 }

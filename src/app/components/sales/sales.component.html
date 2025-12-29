@@ -2,7 +2,7 @@
   <div class="page-header">
     <h1>💰 PDV - Ponto de Venda</h1>
     <div class="session-info" *ngIf="activeSession">
-      <span class="active-badge">🟢 {{ activeSession.name }}</span>
+      <span class="active-badge">🟯 {{ activeSession.nome }}</span>
     </div>
   </div>
 
@@ -21,10 +21,10 @@
       </div>
       <div class="products-grid">
         <div class="product-item" *ngFor="let product of filteredProducts" (click)="addToCart(product)">
-          <h4>{{ product.name }}</h4>
-          <p class="category">{{ product.category }}</p>
-          <p class="price">{{ formatCurrency(product.salePrice) }}</p>
-          <p class="stock">Estoque: {{ product.currentStock }}</p>
+          <h4>{{ product.nome }}</h4>
+          <p class="category">{{ product.categoria }}</p>
+          <p class="price">{{ formatCurrency(product.precoVenda) }}</p>
+          <p class="stock">Estoque: {{ product.estoqueAtual }}</p>
         </div>
       </div>
     </div>
@@ -44,8 +44,8 @@
       <div class="cart-items" *ngIf="cart.length > 0">
         <div class="cart-item" *ngFor="let item of cart; let i = index">
           <div class="item-info">
-            <h4>{{ item.product.name }}</h4>
-            <p>{{ formatCurrency(item.product.salePrice) }} x {{ item.quantity }}</p>
+            <h4>{{ item.product.nome }}</h4>
+            <p>{{ formatCurrency(item.product.precoVenda) }} x {{ item.quantity }}</p>
           </div>
           <div class="item-controls">
             <input
